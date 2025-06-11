@@ -44,13 +44,16 @@ export const SkipGrid: React.FC<SkipGridProps> = ({
                 <Grid container spacing={3} justifyContent="center">
                     {skips.map((skip) => (
                         <Grid
-                            item
                             component="div"
                             key={skip.id}
-                            xs={12}
-                            sm={6}
-                            md={4}
-                            lg={3}
+                            sx={{
+                                width: {
+                                    xs: '100%',
+                                    sm: '50%',
+                                    md: '33.33%',
+                                    lg: '25%'
+                                }
+                            }}
                         >
                             <SkipCard skip={skip} onSelect={handleSkipSelect} />
                         </Grid>

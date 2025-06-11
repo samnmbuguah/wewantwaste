@@ -48,7 +48,7 @@ export const SkipSummary: React.FC<SkipSummaryProps> = ({
                         </Box>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Grid item xs={6} component="div">
+                        <Grid component="div" sx={{ width: '50%' }}>
                             <Button
                                 variant="outlined"
                                 fullWidth
@@ -58,7 +58,7 @@ export const SkipSummary: React.FC<SkipSummaryProps> = ({
                                 Cancel
                             </Button>
                         </Grid>
-                        <Grid item xs={6} component="div">
+                        <Grid component="div" sx={{ width: '50%' }}>
                             <Button variant="contained" fullWidth>
                                 Continue
                             </Button>
