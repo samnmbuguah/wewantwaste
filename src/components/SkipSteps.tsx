@@ -33,7 +33,7 @@ export const SkipSteps: React.FC<SkipStepsProps> = ({
     return (
         <>
             {/* Desktop Steps */}
-            <Box sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: 'center', mb: 4, overflowX: 'auto' }}>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: 'center', mb: 4, overflowX: 'auto', pt: { xs: 1, sm: 2, md: 3, lg: 4 } }}>
                 <Stack direction="row" spacing={2} alignItems="center">
                     {steps.map((step, index) => (
                         <React.Fragment key={step.name}>
@@ -69,7 +69,7 @@ export const SkipSteps: React.FC<SkipStepsProps> = ({
             </Box>
 
             {/* Mobile Menu Icon */}
-            <Box sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end', mb: 2 }}>
+            <Box sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end', mb: 2, pt: { xs: 1, sm: 2, md: 3, lg: 4 } }}>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
