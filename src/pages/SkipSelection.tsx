@@ -12,9 +12,20 @@ import { SkipGrid } from '../components/SkipGrid';
 import { SkipSummary } from '../components/SkipSummary';
 import { PermitCheck } from './PermitCheck';
 
-export const SkipSelection: React.FC = () => {
+interface SkipSelectionProps {
+    selectedSkip: Skip | null;
+    setSelectedSkip: (skip: Skip | null) => void;
+    onContinue: (skip: Skip) => void;
+    onBack: () => void;
+}
+
+export const SkipSelection: React.FC<SkipSelectionProps> = ({
+    selectedSkip,
+    setSelectedSkip,
+    onContinue,
+    onBack
+}) => {
     const [skips, setSkips] = useState<Skip[]>([]);
-    const [selectedSkip, setSelectedSkip] = useState<Skip | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -131,7 +142,8 @@ export const SkipSelection: React.FC = () => {
                     selectedSkip={selectedSkip}
                     calculateTotalPrice={calculateTotalPrice}
                     setSelectedSkip={setSelectedSkip}
-                    onContinue={handleContinue}
+                    onContinue={() => onContinue(selectedSkip)}
+                    onBack={onBack}
                 />
             )}
         </Box>
