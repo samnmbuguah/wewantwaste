@@ -2,7 +2,7 @@ import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { SkipSelection } from './pages/SkipSelection';
 import { PermitCheck } from './pages/PermitCheck';
 import { WasteTypeSelection } from './pages/WasteTypeSelection';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { Skip } from './types/skip';
 
 enum AppSteps {
@@ -96,10 +96,8 @@ const globalStyles = `
 function App() {
   const [currentStep, setCurrentStep] = useState<AppSteps>(AppSteps.WasteType);
   const [selectedSkip, setSelectedSkip] = useState<Skip | null>(null);
-  const [selectedWasteTypes, setSelectedWasteTypes] = useState<string[]>([]);
 
   const handleWasteTypeContinue = (wasteTypes: string[]) => {
-    setSelectedWasteTypes(wasteTypes);
     setCurrentStep(AppSteps.SelectSkip);
   };
 

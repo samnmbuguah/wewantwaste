@@ -5,7 +5,6 @@ import {
     Alert,
     Typography,
     useTheme,
-    useMediaQuery
 } from '@mui/material';
 import { SkipCard } from './SkipCard';
 import type { Skip } from '../types/skip';
@@ -23,10 +22,6 @@ export const SkipGrid: React.FC<SkipGridProps> = ({
     error,
     handleSkipSelect,
 }) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-    const isDesktop = useMediaQuery(theme.breakpoints.down('lg'));
 
     if (loading) {
         return (
