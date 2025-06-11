@@ -1,83 +1,137 @@
-# WeWantWaste Skip Selection Page
+# We Want Waste Skip Selection
 
-A modern, responsive redesign of the WeWantWaste skip selection page, built with React, TypeScript, and Material-UI.
+A modern, responsive web application for selecting waste skips, built with React, TypeScript, and Material-UI.
 
-## Features
+## 🚀 Features
 
-- Responsive design that works on both mobile and desktop
-- Modern UI with Material-UI components
-- TypeScript for type safety
-- Real-time skip data from the WeWantWaste API
-- Mobile-friendly navigation with hamburger menu
-- Accessible and user-friendly interface
+- Responsive design that works on all devices
+- Modern Material-UI components with custom theming
+- Type-safe development with TypeScript
+- Real-time skip availability and pricing
+- Interactive skip selection process
+- Mobile-friendly navigation with drawer menu
+- Progress tracking through skip selection steps
+- VAT calculation and price display
+- Error handling and loading states
 
-## Live Demo
+## 🛠️ Tech Stack
 
-The application is deployed and available at: [https://yourusername.github.io/wewantwaste/](https://yourusername.github.io/wewantwaste/)
+- **React 18** - Latest version for optimal performance
+- **TypeScript** - For type safety and better developer experience
+- **Vite** - Fast development and build tooling
+- **Material-UI (MUI)** - Component library with custom theming
+- **Emotion** - CSS-in-JS styling solution
+- **Axios** - HTTP client for API requests
+- **React Router DOM** - Client-side routing
 
-## Local Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/wewantwaste.git
-cd wewantwaste
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-## Building for Production
-
-To create a production build:
-
-```bash
-npm run build
-```
-
-The build artifacts will be stored in the `dist/` directory.
-
-## Deployment
-
-This project is automatically deployed to GitHub Pages when changes are pushed to the main branch. The deployment is handled by GitHub Actions.
-
-## Technologies Used
-
-- React
-- TypeScript
-- Material-UI
-- Vite
-- GitHub Actions for CI/CD
-- GitHub Pages for hosting
-
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 src/
-  ├── components/     # Reusable UI components
-  ├── pages/         # Page components
-  ├── services/      # API services
-  ├── types/         # TypeScript type definitions
-  └── utils/         # Utility functions
+├── components/     # Reusable UI components
+├── pages/         # Page components
+├── services/      # API and other services
+├── types/         # TypeScript type definitions
+├── utils/         # Utility functions
+└── theme/         # MUI theme configuration
 ```
 
-## Approach
+## 🚀 Getting Started
 
-The redesign focuses on:
-1. Clean, maintainable React code with TypeScript
-2. Responsive design for all screen sizes
-3. Modern UI/UX improvements
-4. Performance optimization
-5. Accessibility considerations
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## License
+## ✨ Best Practices Implemented
 
-MIT
+1. **Type Safety**
+   - Comprehensive TypeScript interfaces for all data structures
+   - Type checking for API responses
+   - Proper type definitions for component props
+
+2. **Component Architecture**
+   - Modular component structure
+   - Separation of concerns
+   - Reusable components (SkipCard, SkipSteps, etc.)
+   - Container/Presenter pattern
+
+3. **State Management**
+   - React hooks for local state
+   - Proper error and loading state handling
+   - Efficient state updates
+
+4. **Styling**
+   - Material-UI theming system
+   - Responsive design using MUI's breakpoints
+   - Consistent spacing and typography
+   - Mobile-first approach
+
+5. **Error Handling**
+   - Comprehensive error boundaries
+   - User-friendly error messages
+   - Graceful fallbacks
+
+6. **Performance**
+   - Code splitting with Vite
+   - Optimized component rendering
+   - Efficient API calls
+
+## 🔄 Future Improvements
+
+1. **State Management**
+   - Implement Redux or Zustand for global state management
+   - Add state persistence for better UX
+
+2. **Testing**
+   - Add unit tests with Jest
+   - Integration tests with React Testing Library
+   - E2E tests with Cypress
+
+3. **Performance**
+   - Implement React.lazy for code splitting
+   - Add service worker for offline support
+   - Optimize image loading and caching
+
+4. **Features**
+   - Add user authentication
+   - Implement skip booking history
+   - Add payment integration
+   - Real-time skip availability updates
+   - Skip size comparison tool
+   - Environmental impact calculator
+
+5. **Accessibility**
+   - Add ARIA labels
+   - Improve keyboard navigation
+   - Add screen reader support
+   - Implement high contrast mode
+
+6. **Developer Experience**
+   - Add Storybook for component documentation
+   - Implement Husky for pre-commit hooks
+   - Add ESLint and Prettier configuration
+   - Set up CI/CD pipeline
+
+7. **Monitoring and Analytics**
+   - Add error tracking (Sentry)
+   - Implement analytics
+   - Add performance monitoring
+
+8. **Documentation**
+   - Add API documentation
+   - Create user guides
+   - Add contribution guidelines
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
