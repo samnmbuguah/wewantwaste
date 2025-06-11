@@ -1,5 +1,16 @@
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { SkipSelection } from './pages/SkipSelection';
+import { PermitCheck } from './pages/PermitCheck';
+import { WasteTypeSelection } from './pages/WasteTypeSelection';
+import React, { useState } from 'react';
+import type { Skip } from './types/skip';
+
+enum AppSteps {
+  WasteType = 'waste-type',
+  SelectSkip = 'select-skip',
+  PermitCheck = 'permit-check',
+  // Add more steps as needed
+}
 
 const theme = createTheme({
   palette: {
@@ -83,11 +94,86 @@ const globalStyles = `
 `;
 
 function App() {
+  const [currentStep, setCurrentStep] = useState<AppSteps>(AppSteps.WasteType);
+  const [selectedSkip, setSelectedSkip] = useState<Skip | null>(null);
+  const [selectedWasteTypes, setSelectedWasteTypes] = useState<string[]>([]);
+
+  const handleWasteTypeContinue = (wasteTypes: string[]) => {
+    setSelectedWasteTypes(wasteTypes);
+    setCurrentStep(AppSteps.SelectSkip);
+  };
+
+  const handleWasteTypeBack = () => {
+    // No back action from WasteType for now, maybe to Postcode step later
+  };
+
+  const handleSelectSkipContinue = (skip: Skip) => {
+    setSelectedSkip(skip);
+    setCurrentStep(AppSteps.PermitCheck);
+  };
+
+  const handleSelectSkipBack = () => {
+    setSelectedSkip(null);
+    setCurrentStep(AppSteps.WasteType);
+  };
+
+  const handlePermitCheckContinue = (location: 'private' | 'public') => {
+    console.log('Permit check location:', location);
+    // TODO: Navigate to the next step (Choose Date)
+  };
+
+  const handlePermitCheckBack = () => {
+    setCurrentStep(AppSteps.SelectSkip);
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case AppSteps.WasteType:
+        return (
+          <WasteTypeSelection
+            onBack={handleWasteTypeBack}
+            onContinue={handleWasteTypeContinue}
+          />
+        );
+      case AppSteps.SelectSkip:
+        return (
+          <SkipSelection
+            selectedSkip={selectedSkip}
+            setSelectedSkip={setSelectedSkip}
+            onContinue={handleSelectSkipContinue}
+            onBack={handleSelectSkipBack}
+          />
+        );
+      case AppSteps.PermitCheck:
+        return (
+          selectedSkip ? (
+            <PermitCheck
+              selectedSkip={selectedSkip}
+              onBack={handlePermitCheckBack}
+              onContinue={handlePermitCheckContinue}
+            />
+          ) : (
+            <WasteTypeSelection
+              onBack={handleWasteTypeBack}
+              onContinue={handleWasteTypeContinue}
+            />
+          )
+        );
+      default:
+        return (
+          <WasteTypeSelection
+            onBack={handleWasteTypeBack}
+            onContinue={handleWasteTypeContinue}
+          />
+        );
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <style>{globalStyles}</style>
-      <SkipSelection />
+      {renderStep()}
     </ThemeProvider>
   );
 }
