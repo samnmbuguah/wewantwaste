@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-    Grid,
     Box,
     CircularProgress,
     Alert,
     Typography,
+    useTheme,
+    useMediaQuery
 } from '@mui/material';
 import { SkipCard } from './SkipCard';
 import type { Skip } from '../types/skip';
@@ -22,6 +23,11 @@ export const SkipGrid: React.FC<SkipGridProps> = ({
     error,
     handleSkipSelect,
 }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+    const isDesktop = useMediaQuery(theme.breakpoints.down('lg'));
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
@@ -41,24 +47,43 @@ export const SkipGrid: React.FC<SkipGridProps> = ({
     return (
         <>
             {skips && skips.length > 0 ? (
-                <Grid container spacing={3} justifyContent="center">
+                <Box
+                    sx={{
+                        width: '100%',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 3,
+                        justifyContent: 'center'
+                    }}
+                >
                     {skips.map((skip) => (
-                        <Grid
-                            component="div"
+                        <Box
                             key={skip.id}
                             sx={{
-                                width: {
+                                flexBasis: {
                                     xs: '100%',
-                                    sm: '50%',
-                                    md: '33.33%',
-                                    lg: '25%'
+                                    sm: 'calc(50% - 12px)',
+                                    md: 'calc(33.333% - 16px)',
+                                    lg: 'calc(25% - 18px)'
+                                },
+                                minWidth: {
+                                    xs: '100%',
+                                    sm: '300px',
+                                    md: '280px',
+                                    lg: '260px'
+                                },
+                                maxWidth: {
+                                    xs: '100%',
+                                    sm: 'calc(50% - 12px)',
+                                    md: 'calc(33.333% - 16px)',
+                                    lg: 'calc(25% - 18px)'
                                 }
                             }}
                         >
                             <SkipCard skip={skip} onSelect={handleSkipSelect} />
-                        </Grid>
+                        </Box>
                     ))}
-                </Grid>
+                </Box>
             ) : (
                 <Typography variant="h6" align="center" mt={4}>
                     No skips available for this location.

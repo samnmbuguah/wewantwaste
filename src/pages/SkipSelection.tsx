@@ -69,10 +69,22 @@ export const SkipSelection: React.FC = () => {
                 backgroundColor: theme.palette.background.default,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center'
+                alignItems: 'center',
+                width: '100%',
+                overflow: 'hidden'
             }}
         >
-            <Box sx={{ width: '100%', maxWidth: '1440px', px: { xs: 2, sm: 3, md: 4 } }}>
+            <Box
+                sx={{
+                    width: '100%',
+                    maxWidth: '1600px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: 3,
+                    px: { xs: 2, sm: 4, md: 6, lg: 8 }
+                }}
+            >
                 <SkipSteps
                     steps={steps}
                     currentStep={currentStep}
@@ -86,14 +98,14 @@ export const SkipSelection: React.FC = () => {
                     error={error}
                     handleSkipSelect={handleSkipSelect}
                 />
+                {selectedSkip && (
+                    <SkipSummary
+                        selectedSkip={selectedSkip}
+                        calculateTotalPrice={calculateTotalPrice}
+                        setSelectedSkip={setSelectedSkip}
+                    />
+                )}
             </Box>
-            {selectedSkip && (
-                <SkipSummary
-                    selectedSkip={selectedSkip}
-                    calculateTotalPrice={calculateTotalPrice}
-                    setSelectedSkip={setSelectedSkip}
-                />
-            )}
         </Box>
     );
 }; 
