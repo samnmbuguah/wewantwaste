@@ -1,1 +1,0 @@
-{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/SkipCard.tsx","./src/components/SkipGrid.tsx","./src/components/SkipSelectionHeader.tsx","./src/components/SkipSteps.tsx","./src/components/SkipSummary.tsx","./src/pages/SkipSelection.tsx","./src/services/skipService.ts","./src/types/skip.ts"],"version":"5.8.3"}
