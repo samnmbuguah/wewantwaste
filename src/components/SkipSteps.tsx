@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import { MapPin, Trash2, Truck, Shield, Calendar, CreditCard, Menu } from 'lucide-react';
 import {
     Box,
     Typography,
-    Button,
     Stack,
     IconButton,
     Drawer,
@@ -12,11 +12,16 @@ import {
     ListItemIcon,
     ListItemText,
     useTheme,
+    Container,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+
+interface Step {
+    name: string;
+    icon: React.ReactNode;
+}
 
 interface SkipStepsProps {
-    steps: { name: string; icon: React.ReactNode }[];
+    steps: Step[];
     currentStep: number;
     mobileOpen: boolean;
     handleDrawerToggle: () => void;
@@ -26,65 +31,119 @@ export const SkipSteps: React.FC<SkipStepsProps> = ({
     steps,
     currentStep,
     mobileOpen,
-    handleDrawerToggle,
+    handleDrawerToggle
 }) => {
     const theme = useTheme();
 
+    const defaultSteps = [
+        { name: 'Postcode', icon: <MapPin className="w-6 h-6" /> },
+        { name: 'Waste Type', icon: <Trash2 className="w-6 h-6" /> },
+        { name: 'Select Skip', icon: <Truck className="w-6 h-6" /> },
+        { name: 'Permit Check', icon: <Shield className="w-6 h-6" /> },
+        { name: 'Choose Date', icon: <Calendar className="w-6 h-6" /> },
+        { name: 'Payment', icon: <CreditCard className="w-6 h-6" /> },
+    ];
+
+    const displaySteps = steps || defaultSteps;
+
     return (
-        <>
-            {/* Desktop Steps */}
-            <Box sx={{ display: { xs: 'none', sm: 'flex' }, justifyContent: 'center', mb: 4, overflowX: 'auto', pt: { xs: 1, sm: 2, md: 3, lg: 4 } }}>
-                <Stack direction="row" spacing={2} alignItems="center">
-                    {steps.map((step, index) => (
-                        <React.Fragment key={step.name}>
-                            <Button
+        <Box sx={{ width: '100%', bgcolor: 'background.paper', borderBottom: `1px solid ${theme.palette.divider}` }}>
+            <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 2 }}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
+                    >
+                        <Menu className="w-6 h-6" />
+                    </IconButton>
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{
+                            display: { xs: 'none', sm: 'flex' },
+                            width: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {displaySteps.map((step, index) => (
+                            <Box
+                                key={step.name}
                                 sx={{
                                     display: 'flex',
-                                    flexDirection: 'column',
                                     alignItems: 'center',
-                                    whiteSpace: 'nowrap',
-                                    transition: 'color 0.2s',
-                                    color: index <= currentStep ? theme.palette.primary.main : 'rgba(255, 255, 255, 0.6)',
-                                    cursor: index <= currentStep ? 'pointer' : 'not-allowed',
-                                    opacity: index <= currentStep ? 1 : 0.5,
-                                    padding: theme.spacing(1, 2),
+                                    flex: 1,
+                                    maxWidth: '200px',
                                 }}
-                                disabled={index > currentStep}
                             >
-                                {step.icon}
-                                <Typography mt={0.5} sx={{ color: 'white', fontSize: '0.8rem' }}>{step.name}</Typography>
-                            </Button>
-                            {index < steps.length - 1 && (
                                 <Box
                                     sx={{
-                                        width: '32px',
-                                        height: '2px',
-                                        backgroundColor: index < currentStep ? theme.palette.primary.main : '#2A2A2A',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        width: '100%',
+                                        position: 'relative',
                                     }}
-                                ></Box>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </Stack>
-            </Box>
-
-            {/* Mobile Menu Icon */}
-            <Box sx={{ display: { xs: 'flex', sm: 'none' }, justifyContent: 'flex-end', mb: 2, pt: { xs: 1, sm: 2, md: 3, lg: 4 } }}>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    sx={{ color: theme.palette.text.primary }}
-                >
-                    <MenuIcon />
-                </IconButton>
-            </Box>
-
-            {/* Mobile Drawer */}
+                                >
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: 40,
+                                            height: 40,
+                                            borderRadius: '50%',
+                                            bgcolor: index <= currentStep ? 'primary.main' : 'background.paper',
+                                            color: index <= currentStep ? 'white' : 'text.secondary',
+                                            border: `2px solid ${index <= currentStep ? 'primary.main' : theme.palette.divider}`,
+                                            zIndex: 1,
+                                        }}
+                                    >
+                                        {step.icon}
+                                    </Box>
+                                    {index < displaySteps.length - 1 && (
+                                        <Box
+                                            sx={{
+                                                position: 'absolute',
+                                                top: '50%',
+                                                left: '50%',
+                                                width: '100%',
+                                                height: 2,
+                                                bgcolor: index < currentStep ? 'primary.main' : theme.palette.divider,
+                                                transform: 'translateY(-50%)',
+                                                zIndex: 0,
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '100%',
+                                        left: '50%',
+                                        transform: 'translateX(-50%)',
+                                        mt: 1,
+                                        color: index <= currentStep ? 'primary.main' : 'text.secondary',
+                                        fontWeight: index === currentStep ? 600 : 400,
+                                        whiteSpace: 'nowrap',
+                                        textAlign: 'center',
+                                        width: 'max-content',
+                                    }}
+                                >
+                                    {step.name}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Stack>
+                </Box>
+            </Container>
             <Drawer
                 variant="temporary"
-                anchor="right"
+                anchor="left"
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
                 ModalProps={{
@@ -92,31 +151,31 @@ export const SkipSteps: React.FC<SkipStepsProps> = ({
                 }}
                 sx={{
                     display: { xs: 'block', sm: 'none' },
-                    '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: 240,
-                        backgroundColor: theme.palette.background.paper,
-                        color: theme.palette.text.primary,
-                    },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
                 }}
             >
                 <List>
-                    {steps.map((step, index) => (
+                    {displaySteps.map((step, index) => (
                         <ListItem key={step.name} disablePadding>
-                            <ListItemButton
-                                sx={{ color: index <= currentStep ? theme.palette.primary.main : theme.palette.text.primary }}
-                                disabled={index > currentStep}
-                                onClick={handleDrawerToggle}
-                            >
-                                <ListItemIcon sx={{ color: index <= currentStep ? theme.palette.primary.main : theme.palette.text.secondary }}>
+                            <ListItemButton>
+                                <ListItemIcon
+                                    sx={{
+                                        color: index <= currentStep ? 'primary.main' : 'text.secondary',
+                                    }}
+                                >
                                     {step.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={step.name} />
+                                <ListItemText
+                                    primary={step.name}
+                                    sx={{
+                                        color: index <= currentStep ? 'primary.main' : 'text.secondary',
+                                    }}
+                                />
                             </ListItemButton>
                         </ListItem>
                     ))}
                 </List>
             </Drawer>
-        </>
+        </Box>
     );
 }; 

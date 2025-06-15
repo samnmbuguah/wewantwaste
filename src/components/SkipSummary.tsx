@@ -10,20 +10,19 @@ import {
 import type { Skip } from '../types/skip';
 
 interface SkipSummaryProps {
-    selectedSkip: Skip;
-    calculateTotalPrice: (skip: Skip) => number;
-    setSelectedSkip: (skip: Skip | null) => void;
+    selectedSkip: Skip | null;
     onContinue: () => void;
+    onBack: () => void;
 }
 
 export const SkipSummary: React.FC<SkipSummaryProps> = ({
     selectedSkip,
-    calculateTotalPrice,
-    setSelectedSkip,
-    onContinue
+    onContinue,
+    onBack
 }) => {
     const theme = useTheme();
-    const totalPrice = calculateTotalPrice(selectedSkip);
+
+    if (!selectedSkip) return null;
 
     return (
         <Paper
@@ -39,46 +38,29 @@ export const SkipSummary: React.FC<SkipSummaryProps> = ({
                 zIndex: 1000
             }}
         >
-            <Box
-                sx={{
-                    maxWidth: '1600px',
-                    mx: 'auto',
-                    px: { xs: 2, sm: 4, md: 6, lg: 8 },
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 1
-                }}
-            >
-                <Typography variant="caption" color="text.secondary" align="center" sx={{ display: 'block' }}>
-                    Imagery and information shown throughout this website may not reflect the exact shape or size specification, colours may vary, options and/or accessories may be featured at additional cost.
-                </Typography>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography variant="h6" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
-                            {selectedSkip.size} Yard Skip
+            <Box sx={{ 
+                maxWidth: '1200px',
+                mx: 'auto',
+                px: { xs: 2, sm: 3, md: 4 }
+            }}>
+                <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+                    <Box>
+                        <Typography variant="h6" gutterBottom>
+                            Selected Skip: {selectedSkip.size} Yard
                         </Typography>
-                        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                            £{totalPrice.toFixed(2)}
+                        <Typography variant="body1" color="text.secondary">
+                            {selectedSkip.description}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {selectedSkip.hire_period_days} day hire
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" spacing={2} alignItems="center">
+                    </Box>
+                    <Stack direction="row" spacing={2}>
                         <Button
                             variant="outlined"
-                            onClick={() => setSelectedSkip(null)}
+                            onClick={onBack}
                             sx={{
-                                bgcolor: 'background.paper',
-                                color: 'white',
+                                borderColor: theme.palette.divider,
+                                color: theme.palette.text.primary,
                                 '&:hover': {
-                                    bgcolor: 'action.hover'
+                                    borderColor: theme.palette.primary.main,
                                 }
                             }}
                         >
@@ -98,7 +80,7 @@ export const SkipSummary: React.FC<SkipSummaryProps> = ({
                             Continue
                         </Button>
                     </Stack>
-                </Box>
+                </Stack>
             </Box>
         </Paper>
     );

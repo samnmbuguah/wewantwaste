@@ -1,169 +1,70 @@
 import React from 'react';
-import {
-    Card,
-    CardContent,
-    Typography,
-    Button,
-    Box,
-    Chip,
-    useTheme,
-} from '@mui/material';
+import { AlertTriangle, ArrowRight } from 'lucide-react';
 import type { Skip } from '../types/skip';
-import WarningIcon from '@mui/icons-material/Warning';
 
 interface SkipCardProps {
     skip: Skip;
+    isSelected: boolean;
     onSelect: (skip: Skip) => void;
-    selected?: boolean;
 }
 
-export const SkipCard: React.FC<SkipCardProps> = ({ skip, onSelect, selected }) => {
-    const theme = useTheme();
-    const calculateTotalPrice = () => {
-        const basePrice = skip.price_before_vat;
-        const vatAmount = (basePrice * skip.vat) / 100;
-        return basePrice + vatAmount;
-    };
-
+export const SkipCard: React.FC<SkipCardProps> = ({
+    skip,
+    isSelected,
+    onSelect
+}) => {
     return (
-        <Card
-            sx={{
-                maxWidth: 345,
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 3,
-                },
-                border: selected ? `2px solid ${theme.palette.primary.main}` : `2px solid ${theme.palette.background.paper}`,
-                bgcolor: selected ? theme.palette.primary.main + '0D' : theme.palette.background.paper,
-                color: theme.palette.text.primary,
-                position: 'relative',
-            }}
+        <div
+            className={`group relative rounded-lg border-2 p-4 md:p-6 transition-all
+                ${isSelected
+                    ? 'border-[#0037C1] bg-[#0037C1]/10'
+                    : 'border-[#2A2A2A] hover:border-[#0037C1]/50'}
+                bg-[#1C1C1C] text-white cursor-pointer`}
+            onClick={() => onSelect(skip)}
         >
-            {selected && (
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 12,
-                        right: 12,
-                        color: theme.palette.primary.main,
-                    }}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <path d="M20 6 9 17l-5-5" />
+            {isSelected && (
+                <div className="absolute top-3 right-3 md:top-4 md:right-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check w-5 h-5 md:w-6 md:h-6 text-[#0037C1]">
+                        <path d="M20 6 9 17l-5-5"></path>
                     </svg>
-                </Box>
+                </div>
             )}
-
-            <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ position: 'relative', mb: 2 }}>
-                    <img
-                        src={`https://yozbrydxdlcxghkphhtq.supabase.co/storage/v1/object/public/skips/skip-sizes/${skip.size}-yarder-skip.jpg`}
-                        alt={`${skip.size} Yard Skip`}
-                        style={{
-                            width: '100%',
-                            height: '192px',
-                            objectFit: 'cover',
-                            borderRadius: '8px',
-                        }}
-                    />
-                    <Chip
-                        label={`${skip.size} Yards`}
-                        sx={{
-                            position: 'absolute',
-                            top: 12,
-                            right: 8,
-                            bgcolor: theme.palette.primary.main,
-                            color: theme.palette.primary.contrastText,
-                            fontWeight: 500,
-                        }}
-                    />
-                    {!skip.allowed_on_road && (
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                bottom: 12,
-                                left: 8,
-                                bgcolor: 'rgba(0, 0, 0, 0.9)',
-                                backdropFilter: 'blur(4px)',
-                                borderRadius: '8px',
-                                p: 1.5,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 1,
-                            }}
-                        >
-                            <WarningIcon sx={{ color: '#FFB800', fontSize: 16 }} />
-                            <Typography
-                                variant="caption"
-                                sx={{ color: '#FFB800', fontWeight: 500 }}
-                            >
-                                Not Allowed On The Road
-                            </Typography>
-                        </Box>
-                    )}
-                </Box>
-
-                <Typography variant="h6" gutterBottom>
-                    {skip.size} Yard Skip
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    {skip.hire_period_days} day hire period
-                </Typography>
-
-                <Box sx={{ mb: 2 }}>
-                    <Typography variant="h5" color={theme.palette.primary.main} fontWeight="bold">
-                        £{calculateTotalPrice().toFixed(2)}
-                    </Typography>
-                </Box>
-
-                <Button
-                    variant={selected ? "contained" : "outlined"}
-                    fullWidth
-                    onClick={() => onSelect(skip)}
-                    sx={{
-                        bgcolor: selected ? theme.palette.primary.main : theme.palette.background.default,
-                        color: selected ? theme.palette.primary.contrastText : theme.palette.text.primary,
-                        '&:hover': {
-                            bgcolor: selected ? theme.palette.primary.dark : theme.palette.background.paper,
-                        },
-                        py: 1.5,
-                        borderRadius: 1,
-                    }}
-                >
-                    {selected ? 'Selected' : 'Select This Skip'}
-                    {!selected && (
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            style={{ marginLeft: 8 }}
-                        >
-                            <path d="M5 12h14" />
-                            <path d="m12 5 7 7-7 7" />
-                        </svg>
-                    )}
-                </Button>
-            </CardContent>
-        </Card>
+            <div className="relative">
+                <img
+                    src={`https://yozbrydxdlcxghkphhtq.supabase.co/storage/v1/object/public/skips/skip-sizes/${skip.size}-yarder-skip.jpg`}
+                    alt={`${skip.size} Yard Skip`}
+                    className="w-full h-36 md:h-48 object-cover rounded-md mb-4"
+                />
+                <div className="absolute top-3 right-2 z-20 bg-[#0037C1] text-white px-3 py-1 rounded-full text-sm font-medium shadow-md">
+                    {skip.size} Yards
+                </div>
+                {skip.size >= 10 && (
+                    <div className="absolute bottom-3 left-2 z-20 space-y-2">
+                        <div className="bg-black/90 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2">
+                            <AlertTriangle className="w-4 h-4 text-yellow-500 shrink-0" />
+                            <span className="text-xs font-medium text-yellow-500">Not Allowed On The Road</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <h3 className="text-lg md:text-xl font-bold mb-2 text-white">{skip.size} Yard Skip</h3>
+            <p className="text-sm text-gray-400 mb-4 md:mb-6">{skip.hire_period_days} day hire period</p>
+            <div className="flex justify-between items-center mb-4">
+                <div>
+                    <span className="text-xl md:text-2xl font-bold text-[#0037C1]">
+                        £{skip.price_before_vat + (skip.price_before_vat * skip.vat / 100)}
+                    </span>
+                </div>
+            </div>
+            <button
+                className={`w-full py-2.5 md:py-3 px-4 rounded-md transition-all flex items-center justify-center space-x-2
+                    ${isSelected
+                        ? 'bg-[#0037C1] text-white hover:bg-[#002da1]'
+                        : 'bg-[#2A2A2A] text-white hover:bg-[#3A3A3A] hover:border-[#0037C1]'}`}
+            >
+                <span>{isSelected ? 'Selected' : 'Select This Skip'}</span>
+                {!isSelected && <ArrowRight className="w-4 h-4" />}
+            </button>
+        </div>
     );
 }; 

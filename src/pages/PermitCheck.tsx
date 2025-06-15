@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import {
     Box,
-    Button,
     Typography,
-    useTheme,
     Paper,
+    Button,
     Stack,
-    IconButton
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { SkipSteps } from '../components/SkipSteps';
-import type { Skip } from '../types/skip';
 
 interface PermitCheckProps {
-    selectedSkip: Skip;
     onBack: () => void;
     onContinue: (location: 'private' | 'public') => void;
 }
 
 export const PermitCheck: React.FC<PermitCheckProps> = ({
-    selectedSkip,
     onBack,
     onContinue
 }) => {
